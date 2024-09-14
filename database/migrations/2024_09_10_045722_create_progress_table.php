@@ -16,6 +16,10 @@ return new class extends Migration
             $table->unsignedBigInteger('enrollment_id');
             $table->unsignedBigInteger('lesson_id');
             $table->boolean('is_completed')->default(false);
+
+            $table->foreign('enrollment_id')->references('id')->on('enrollments')->onDelete('cascade');
+            $table->foreign('lesson_id')->references('id')->on('lessons')->onDelete('cascade');
+            
             $table->timestamps();
         });
     }

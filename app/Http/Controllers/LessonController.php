@@ -87,10 +87,10 @@ class LessonController extends Controller
         Lesson::findOrFail($id)->delete();
 
         $notification = array(
-            'message' => 'Lesson Updated successfuly',
+            'message' => 'Lesson Deleted successfuly',
             'alert-type' => 'success',
         );
-        return redirect()->back()->with('$notification');
+        return redirect()->back()->with($notification);
     }
 
 

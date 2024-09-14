@@ -16,7 +16,7 @@
                             <th>#</th>
                             <th>Course Title</th>
                             <th>Lessons</th>
-                            <th>Lesson completed</th>
+                            {{-- <th>Lesson completed</th> --}}
 
                         </tr>
                     </thead>
@@ -27,13 +27,11 @@
                                 <td>{{ $course->course->title }}</td>
                                 <td>
                                     <a class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                        id="{{ $course->id }}" onclick="lesssonView(this.id)">
+                                        id="{{ $course->course_id }}" onclick="lesssonView(this.id)">
                                         Lessons
                                     </a>
                                 </td>
-                                <td>
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                                </td>
+
                             </tr>
                         @endforeach
                         </tr>
@@ -60,44 +58,4 @@
         </div>
 
     </section>
-
-   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        // Get all checkboxes
-        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-
-        checkboxes.forEach(checkbox => {
-            checkbox.addEventListener('change', async function() {
-                const progressId = this.value;
-                const isCompleted = this.checked;
-
-                try {
-                    const response = await fetch('/update-progress', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                        },
-                        body: JSON.stringify({
-                            progress_id: progressId,
-                            is_completed: isCompleted
-                        })
-                    });
-
-                    const data = await response.json();
-
-                    if (data.success) {
-                        console.log('Progress updated successfully!');
-                    } else {
-                        console.log('Failed to update progress.');
-                    }
-                } catch (error) {
-                    console.error('Error:', error);
-                }
-            });
-        });
-    });
-</script>
-
-
 @endsection

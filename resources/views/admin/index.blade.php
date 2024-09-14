@@ -132,7 +132,7 @@
 
                 Swal.fire({
                     title: 'Are you sure?',
-                    text: "Do you want to Delete the Selected Client?",
+                    text: "Do you want to Delete?",
                     icon: 'warning',
                     showCancelButton: true,
                     cancelButtonText: 'CANCEL',
@@ -159,7 +159,7 @@
     {{-- Delete button confirm end --}}
 
     {{-- Lessons view details start --}}
-   
+
     <script type="text/javascript">
         $.ajaxSetup({
             headers: {

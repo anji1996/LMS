@@ -23,7 +23,7 @@ public function logout(Request $request){
         return redirect('/');
 }
 
-    public function studentEnroled()
+public function studentEnroled()
     {
         $students = User::where('id', '!=', '1')->latest()->get();
         return view('admin.student.all_student', compact('students'));

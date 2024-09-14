@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\EnrolleController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProgressController;
@@ -23,6 +24,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+//lesson view model
+Route::get('/lesson/view/model/{id}', [CourseController::class, 'AllLessonAjax']);
+
+
 //admin
 Route::middleware(['auth', 'role:instructor'])->group(function(){
 
@@ -39,9 +44,6 @@ Route::middleware(['auth', 'role:instructor'])->group(function(){
         Route::get('/edit/course/{id}', 'edit')->name('edit.course');
         Route::post('/update/course', 'update')->name('update.course');
         Route::get('/delete/course/{id}', 'delete')->name('delete.course');
-
-        //lesson view model
-        Route::get('/lesson/view/model/{id}', 'AllLessonAjax');
 
     });
 
@@ -63,25 +65,18 @@ Route::middleware(['auth', 'role:instructor'])->group(function(){
 Route::middleware(['auth', 'role:student'])->group(function(){
     Route::controller(StudentController::class)->group(function () {
         Route::get('/user/dashboard', 'dashboard')->name('user.dashboard');
+        Route::get('/student/logout', 'logout')->name('student.logout');
 
-        Route::get('/student/enroled/', 'enroled')->name('student.enroled');
+
+    });
+
+    Route::controller(EnrolleController::class)->group(function () {
+        Route::get('/student/enroled/all', 'all')->name('student.enroled.all');
         Route::get('/student/enroled/add', 'add')->name('student.enroled.add');
         Route::post('/student/enroled/store', 'store')->name('student.enroled.store');
 
-        //lesson view model
-        Route::get('/lesson/view/model/{id}', 'AllLessonAjax');
-        // complete courses.php
-        Route::post('/mark-complete', 'markComplete')->name('mark-complete');
 
     });
-
-    Route::controller(ProgressController::class)->group(function () {
-
-        // complete courses.php
-        Route::post('/update-progress', [ProgressController::class, 'updateProgress']);
-
-    });
-
 
 });
 

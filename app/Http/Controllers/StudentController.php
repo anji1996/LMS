@@ -18,40 +18,6 @@ class StudentController extends Controller
         return view('student.dashboard');
     }
 
-    public function enroled(){
-        $courses = Enrollment::all();
-        return view('student.enrole.enrole_all', compact('courses'));
-    }
-
-    public function add()
-    {
-        $id = Auth::user()->id;
-        $courses = Course::findORfail($id)->get();
-
-        return  view('student.enrole.enrole_add', compact('courses'));
-    }
-
-    public function store(Request $request){
-        $request->validate([
-            'course_id' => 'required',
-
-        ], [
-            'course_id.required' => 'The Course field is required.',
-        ]);
-
-        Enrollment::insert([
-            'student_id' => Auth::user()->id,
-            'course_id' => $request->course_id,
-            'created_at' => Carbon::now(),
-        ]);
-
-        $notification = array(
-            'message' => 'Course Enroled successfuly',
-            'alert-type' => 'success',
-        );
-
-        return redirect()->back()->with($notification);
-    }
 
     //Lesson view function
 
@@ -64,5 +30,17 @@ class StudentController extends Controller
         ));
     }
 
-    
+    public function logout(Request $request)
+    {
+
+        Auth::guard('web')->logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/');
+    }
+
+
 }

@@ -1,8 +1,8 @@
 @extends('admin.index')
 @section('contain')
     <div class="pagetitle pb-5 pt-5">
-        <h1>All Enrole Student</h1>
-        <a class="btn btn-primary mt-3 " href="{{ route('add.course') }}">Create Courses</a>
+        <h1>All Enroled Student</h1>
+
     </div><!-- End Page Title -->
 
 
